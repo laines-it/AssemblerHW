@@ -1,0 +1,42 @@
+include settings.inc
+include io2020.inc
+.DATA
+
+  
+.CODE
+start:
+
+
+ININT AX
+MOV BP, AX
+ININT BX
+MOV ECX, 0
+
+L : MOV DX,0
+    MOV AX, BP
+    DIV BX
+    CMP DX, CX
+    JB L1
+    MOV CX, DX
+L1: CMP BX, 2
+    JE FIN
+    DEC BX
+    JMP L
+
+
+
+
+
+FIN: OUTU ECX
+
+
+
+
+
+
+
+
+
+
+  exit
+END start

@@ -1,0 +1,13 @@
+mov AX, word ptr T
+mov DX, word ptr T + 2
+
+mov BX, 60
+div BX
+mov S, DL
+
+div BL
+mov M, AH
+
+
+mov H, AL
+

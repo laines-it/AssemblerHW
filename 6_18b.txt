@@ -1,0 +1,11 @@
+MOV ECX, N
+MOV EAX, 1
+L: CMP A[EAX*2-2],1
+   JE L1
+   NEG A[EAX*2-2]
+   JMP FIN
+  L1: 
+    INC EAX  
+    LOOP L
+
+FIN:

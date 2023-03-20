@@ -1,0 +1,100 @@
+include settings.inc
+include io2020.inc
+.STACK 4096
+
+.DATA
+K=10
+A DB 100 dup(0)
+B DB 100 dup(0)
+
+NA DD 0
+NB DD 0
+
+
+
+extrn INPUT@0: PROC, ACT1@0: PROC, ACT2@0: PROC
+
+.CODE
+
+
+
+READ MACRO str, length
+  MOV EDI, offset str
+  push EDI
+  call INPUT@0
+  MOV length, EBX
+ENDM
+   
+
+start:
+  
+    READ A, NA
+    CMP NA, -1
+    JNE R2
+    EXIT
+
+R2: inchar CL
+    inchar CL
+    READ B, NB
+    CMP NB, -1
+    JNE R3
+    EXIT
+
+R3:
+
+MOV EAX, NA
+MOV EDX, NB
+CMP EAX, EDX
+JB R4
+
+MOV EDI, offset A
+MOV ECX, NA
+PUSH ECX
+PUSH EDI
+call ACT1@0
+
+MOV EDI, offset B
+MOV ECX, NB
+PUSH ECX
+PUSH EDI
+call ACT2@0
+
+JMP FinPR
+R4:                              ;случай когда первый текст меньше второго и ему нужно второе правило 
+   MOV EDI, offset B
+   MOV ECX, NB
+   PUSH ECX
+   PUSH EDI
+   call ACT1@0
+
+   MOV EDI, offset A
+   MOV ECX, NA
+   PUSH ECX
+   PUSH EDI
+   call ACT2@0
+
+
+FinPR:
+       MOV ESI,offset A
+       MOV ECX, NA
+Pr1:   MOV AL, [ESI]
+       OUTCHAR AL
+       INC ESI
+       LOOP Pr1
+NEWLINE
+       MOV ESI,offset B
+       MOV ECX, NB
+Pr2:   MOV AL, [ESI]
+       OUTCHAR AL
+       INC ESI
+       LOOP Pr2
+	
+    
+    ;outi NA
+    ;NEWLINE
+    ;outi NB
+ 
+
+EXIT
+
+END start

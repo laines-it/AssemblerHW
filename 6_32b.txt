@@ -1,0 +1,17 @@
+MOV EAX, N
+MOV ECX, type A
+MUL ECX
+MOV EDX,EAX ; чтобы переходить на новую строку
+SUB EAX, ECX
+MOV EBX, 0
+
+
+
+L: MOV A[EBX][EAX],0
+   CMP EAX, 0
+   JE FIN
+   SUB EAX, ECX
+   ADD EBX, EDX
+   JMP L
+FIN:
+

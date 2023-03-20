@@ -1,0 +1,17 @@
+sub D1, 48
+mov bl, D1
+mov al, 100
+mul bl
+mov N, ax
+
+sub D2, 48
+mov bl, D2
+mov al, 10
+mul bl
+add N, ax
+
+sub D3, 48
+mov bl, D3
+mov al, 1
+mul bl
+add N, ax

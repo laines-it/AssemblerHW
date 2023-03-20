@@ -1,0 +1,56 @@
+include settings.inc
+include io2020.inc
+.DATA
+
+.CODE
+start:
+
+MOV ESI, 10
+MOV ECX, 50
+MOV EDX, 0
+MOV EBX, 0
+MOV EAX, 0
+
+
+  INCHAR BL
+  CMP BL, ' '
+  JE FAIL1
+  SUB BL, 48
+  CMP BL,9
+  JA FAIL1
+  ADD EAX, EBX
+
+
+L: 
+  INCHAR BL
+  CMP BL, ' '
+  JE FIN
+  SUB BL, 48
+  CMP BL,9
+  JA FAIL1
+  MUL ESI
+  ADD EAX, EBX
+  ADC dx,0
+  LOOP L
+
+
+FAIL1: outstr 'error'
+Jmp M2
+
+FIN: CMP EDX,0
+     JA FAIL3
+     OUTU EAX
+     JMP M2
+FAIL3: outstr 'overflow'
+M2:
+
+
+
+
+
+
+
+
+
+  exit
+END start

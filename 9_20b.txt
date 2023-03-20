@@ -1,0 +1,16 @@
+
+MOV AX, D2
+AND AX, mask d2
+MOV D1,AX
+SHR D1,11
+
+MOV AX, D2
+AND AX, mask m2
+SHR AX,2
+ADD D1,AX
+
+MOV AX, D2
+AND AX, mask y2
+SHL AX, 9
+ADD D1,AX
+

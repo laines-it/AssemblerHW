@@ -1,0 +1,32 @@
+include settings.inc
+include io2020.inc
+.DATA
+
+N=10
+
+.CODE
+start:
+MOV ECX,0
+
+
+inchar ah
+cmp ah, 'S'
+JNE L
+INC ECX
+
+L:  MOV al,ah
+    inchar ah
+    CMP ah, '.'
+    JE FIN    
+
+    CMP ah, 'S'
+    JNE L
+    CMP al, ','
+    JNE L
+    INC ECX
+    JMP L
+FIN: OUTI ECX
+
+
+  exit
+END start

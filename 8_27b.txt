@@ -1,0 +1,17 @@
+MOV EAX,0
+  
+L:
+  MOV X[EAX],0
+  SHL PX,1
+  JNC L1
+  ADD X[EAX],2
+L1:
+  SHL PX,1
+  JNC L2
+  ADD X[EAX],1
+L2: 
+  CMP EAX, 15
+  JE FIN
+  INC EAX
+  JMP L
+FIN: 

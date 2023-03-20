@@ -1,0 +1,41 @@
+include settings.inc
+include io2020.inc
+.DATA
+N=10
+A DW N DUP(?)
+  
+.CODE
+start:
+
+MOV ECX, N
+MOV EBX, 0
+
+ININT A[2*ECX-2]
+DEC ECX
+ININT A[2*ECX-2]
+DEC ECX
+
+
+L: ININT A[2*ECX-2]
+   MOV AX, A[2*ECX-2]
+   MOV DX, A[2*ECX+2]
+   CMP AX, DX
+   JNE L1
+   INC EBX
+
+  L1: LOOP L
+ 
+FIN: OUTI EBX
+
+
+
+
+
+
+
+
+
+
+
+  exit
+END start

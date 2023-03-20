@@ -1,0 +1,35 @@
+include settings.inc
+include io2020.inc
+.DATA
+
+.CODE
+start:
+MOV ECX,32
+MOV EDX,0
+ININT EAX
+
+CMP EAX,0
+JNE M
+OUTSTR '0'
+JMP FIN
+
+ 
+M: SHL EAX,1
+   JC L
+   CMP EDX,1
+   JNE L1
+   OUTSTR '0'
+   JMP L1
+   L: MOV EDX, 1; запоминаю момент когда появилась единица
+      OUTSTR '1'
+   L1: 
+       DEC ECX
+       CMP ECX, 0
+       JE FIN
+       JMP M
+
+FIN:
+
+
+  exit
+END start

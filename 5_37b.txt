@@ -1,0 +1,33 @@
+include settings.inc
+include io2020.inc
+.DATA
+
+N=10
+
+.CODE
+start:
+
+MOV ECX, N
+MOV EBX, -2147483648
+MOV EDX, -2147483648
+
+L: ININT EAX
+   CMP EAX, EDX
+   JLE L1
+   MOV EBX, EDX
+   MOV EDX, EAX
+   JMP TOLOOP
+
+L1: CMP EAX, EBX
+    JLE TOLOOP
+    MOV EBX, EAX
+
+
+TOLOOP: LOOP L
+
+OUTI EDX
+OUTCHAR ' '
+OUTI EBX
+
+  exit
+END start
