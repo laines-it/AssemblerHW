@@ -1,0 +1,47 @@
+include settings.inc
+include io2020.inc
+
+
+TRUE equ 1
+FALSE equ 0
+
+SUFFIX equ 'Z'
+SEPARATOR equ ','
+STOP equ '.'
+
+; Pseudo:
+;    repeat
+;        read(sym);    
+;        if sym = ' ' and after_z then
+;          words := words + 1;
+;        after_z := sym = 'Z';
+;    until sym = '.';
+.code
+start:
+    mov eax, 0
+    mov ebx, FALSE ; boolean - after Z
+    mov ecx, 0 ; word counter
+_while:
+    inchar al
+    cmp al, SEPARATOR
+   	je on_z
+   	cmp al, STOP
+   	jne isafter
+on_z:
+    cmp ebx, FALSE
+    jne isafter
+    inc ecx
+isafter:
+    cmp al, SUFFIX
+    je notafter
+    mov ebx, TRUE
+    jmp condition
+notafter:
+    mov ebx, FALSE
+condition:
+    cmp al, STOP
+    jne _while
+stop:
+    outu ecx
+    exit
+    end start
