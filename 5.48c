@@ -1,0 +1,59 @@
+include settings.inc
+include io2020.inc
+
+; PSUEDOCODE:
+
+; repeat
+;     read(current);
+;     if (last = ',') or (last = chr(0)) then
+;         first := current;
+;     if (current = ',') or (current = '.') and (last = first) then
+;         words := words + 1;
+;     past := current;
+; until current = '.';
+; writeln(words);
+
+.code
+start:
+    mov al, 0 ; current letter
+    mov bl, 0 ; last letter
+    mov cl, 0 ; word's first letter
+    mov edx, 0 ; word counter
+
+    SEPARATOR equ ','
+    STOP equ '.'
+_loop:
+    inchar al
+
+;     if (last = ',') or (last = chr(0)) then
+;         first := current;
+    cmp bl, SEPARATOR
+    je _first_letter
+    cmp bl, 0
+    jne _is_word_end
+_first_letter:
+    mov cl, al
+
+;     if (current = ',') or (current = '.') and (last = first) then
+;         words := words + 1;
+_is_word_end:
+    cmp al, SEPARATOR
+    je _word_end
+    cmp al, STOP
+    jne _continue
+_word_end:
+    ; outchar bl
+    ; outchar cl
+    ; outchar ' '
+    cmp bl, cl
+    jne _continue
+    inc edx
+
+_continue:
+    mov bl, al
+    cmp al, STOP
+    jne _loop
+stop:
+    outu edx
+    exit
+    end start
