@@ -1,0 +1,31 @@
+include settings.inc
+include io2020.inc
+
+.code
+start:
+    inint ecx
+    mov eax, 080000000h ; -MAXINT
+    ; �� ��������� ���� ����� ������� ����� (ecx > 0)
+    ; cmp ecx, 0
+    ; jz prog_stop
+_loop_start:
+    ; ebx - ���������, eax - ������������
+    inint ebx
+    cmp ebx, eax
+    jle _loop_end
+    mov eax, ebx
+_loop_end: loop _loop_start
+    ; ���������� eax / ebx
+    cmp ebx, 0
+    jnz division
+    outstr "������"
+    jmp prog_stop
+division:
+    ; [edx:eax] / ebx
+    cdq
+    idiv ebx
+    outi edx
+prog_stop:
+    exit
+    end start
+end.
